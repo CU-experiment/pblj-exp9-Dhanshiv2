@@ -1,0 +1,51 @@
+package com.example.ioc;
+
+public class Course {
+
+    private String courseName;
+    private CourseDuration duration;
+
+    // Constructor
+    public Course(String courseName, int weeks) {
+        this.courseName = courseName;
+        this.duration = new CourseDuration(weeks);
+    }
+
+    // Public method to display course info
+    public void displayInfo() {
+        System.out.println("Course: " + courseName);
+        System.out.println("Duration: " + duration.getDurationInWeeks() + " weeks (" +
+                duration.getDurationInDays() + " days)");
+    }
+
+    // Non-static inner class to handle duration
+    private class CourseDuration {
+        private int weeks;
+
+        public CourseDuration(int weeks) {
+            setDuration(weeks); // Use setter to enforce validation
+        }
+
+        public int getDurationInWeeks() {
+            return weeks;
+        }
+
+        public int getDurationInDays() {
+            return weeks * 7;
+        }
+
+        public void setDuration(int weeks) {
+            if (weeks > 0) {
+                this.weeks = weeks;
+            } else {
+                throw new IllegalArgumentException("Duration must be positive.");
+            }
+        }
+    }
+
+    // Main method to test
+    public static void main(String[] args) {
+        Course course = new Course("Java Programming", 8);
+        course.displayInfo();
+    }
+}
